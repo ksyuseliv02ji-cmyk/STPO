@@ -1,0 +1,29 @@
+//Исходный код:
+const int numLEDs = 6; // количество светодиодов
+int ledPins[numLEDs] = {22, 23, 24, 25, 26, 27}; void setup() {
+  for (int i = 0; i < numLEDs; i++) {
+    pinMode(ledPins[i], OUTPUT);
+  }
+  randomSeed(analogRead(0)); // генератор случайных чисел
+}
+void loop() {
+  int ledsToTurnOn = random(1, numLEDs + 1); // случайное число светодиодов для загорания
+  int selectedLEDs[numLEDs];
+  // инициализация массива для выбранных светодиодов
+  for (int i = 0; i < numLEDs; i++) {
+    selectedLEDs[i] = 0;
+  }
+  // выбор случайных светодиодов 
+  for (int i = 0; i < ledsToTurnOn; i++) {
+    int index;
+    do {
+      index = random(0, numLEDs);
+    } while (selectedLEDs[index] == 1);
+    selectedLEDs[index] = 1;
+  }
+  // зажигание выбранных светодиодов
+  for (int i = 0; i < numLEDs; i++) {
+    digitalWrite(ledPins[i], selectedLEDs[i] == 1 ? HIGH : LOW);
+  }
+  delay(500); // задержка перед следующим запуском
+}
