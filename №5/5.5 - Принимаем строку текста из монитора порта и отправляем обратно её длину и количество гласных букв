@@ -1,0 +1,30 @@
+//Исходный код:
+void setup() {
+  Serial.begin(9600);
+  while (!Serial) {
+    ; // Ждем, пока Serial будет готов (для плат с Native USB)
+  }
+  Serial.println("Введите строку, и Arduino вернет длину и количество гласных:");
+}
+
+void loop() {
+  if (Serial.available() > 0) {
+    String input = Serial.readStringUntil('\n');
+    input.trim(); // удаляем пробелы и переносы
+
+    int lengthStr = input.length();
+    int vowelsCount = 0;
+
+    // Подсчет гласных (как строчных, так и заглавных)
+    for (int i = 0; i < lengthStr; i++) {
+      char c = tolower(input.charAt(i));
+      if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'y') {
+        vowelsCount++;
+      }
+    }
+    Serial.print("Длина строки: ");
+    Serial.println(lengthStr);
+    Serial.print("Количество гласных: ");
+    Serial.println(vowelsCount);
+  }
+}
