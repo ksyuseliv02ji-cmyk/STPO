@@ -1,0 +1,14 @@
+//Включение встроенного светодиода на заданное количество секунд: 
+//Исходный код:
+const int ledPin = 13; 
+unsigned long durationSeconds = 5; 
+void setup() {
+  pinMode(ledPin, OUTPUT);
+  digitalWrite(ledPin, HIGH); 
+  delay(durationSeconds * 1000); 
+  digitalWrite(ledPin, LOW); 
+}
+
+void loop() {
+ 
+}
