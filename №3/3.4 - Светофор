@@ -1,0 +1,26 @@
+//Исходный код:
+const int redPin = 11;
+const int yellowPin = 12;
+const int greenPin = 13;
+void setup() {
+  // Настраиваем пины как выходы
+  pinMode(redPin, OUTPUT);
+  pinMode(yellowPin, OUTPUT);
+  pinMode(greenPin, OUTPUT);
+}
+void loop() {
+  // Зеленый сигнал
+  digitalWrite(greenPin, HIGH);
+  digitalWrite(yellowPin, LOW);
+  digitalWrite(redPin, LOW);
+  delay(5000); // 5 секунд
+  // Желтый сигнал (подготовка к переключению)
+  digitalWrite(greenPin, LOW);
+  digitalWrite(yellowPin, HIGH);
+  delay(2000); // 2 секунды
+  // Красный сигнал
+  digitalWrite(yellowPin, LOW);
+  digitalWrite(redPin, HIGH);
+  delay(5000); // 5 секунд
+  // Повтор цикла
+}
