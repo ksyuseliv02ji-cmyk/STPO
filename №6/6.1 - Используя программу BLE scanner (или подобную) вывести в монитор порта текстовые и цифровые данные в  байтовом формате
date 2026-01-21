@@ -1,0 +1,13 @@
+//Исходный код:
+void setup() {
+  Serial.begin(9600);
+  Serial2.begin(115200);
+}
+void loop() {
+  int randomNumber = random(-100, 100);
+  Serial2.println(randomNumber);
+  delay(1000);
+  if (Serial2.available()) {
+    Serial.write(Serial2.read());
+  }
+}
