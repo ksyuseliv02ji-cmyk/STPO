@@ -1,0 +1,22 @@
+//Исходный код для ESP32: 
+BluetoothSerial SerialBT;
+void setup() {
+  Serial.begin(115200);
+  Serial2.begin(9600, SERIAL_8N1, 16, 17);
+  SerialBT.begin("Mega_LED_Control");
+}
+void loop() {
+  if (SerialBT.available()) {
+    char btCommand = SerialBT.read();
+    Serial.print(btCommand);
+    Serial2.write(btCommand);
+    Serial.print(btCommand);
+    if (btCommand == '1') {
+      SerialBT.println("LED ON - команда отправлена на Mega");
+    } else if (btCommand == '0') {
+      SerialBT.println("LED OFF - команда отправлена на Mega");
+    }
+  }
+ 
+  delay(100);
+}
