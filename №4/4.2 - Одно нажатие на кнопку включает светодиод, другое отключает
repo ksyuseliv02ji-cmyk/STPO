@@ -1,0 +1,20 @@
+//Исходный код:
+const int buttonPin = 34; // Пин, к которому подключена кнопка
+const int ledPin = 13;    // Пин, к которому подключен светодиод
+int buttonState = 0; 
+void setup() {
+  pinMode(buttonPin, INPUT); 
+  // Настройка пина светодиода для выхода
+  pinMode(ledPin, OUTPUT); 
+}
+void loop() {
+  // Состояние кнопки
+  buttonState = digitalRead(buttonPin);
+  if (buttonState == LOW) {
+    // Если кнопка активирована, включаем светодиод
+    digitalWrite(ledPin, LOW); 
+  } else {
+    // Если кнопка пасивна, выключаем светодиод
+    digitalWrite(ledPin, HIGH); 
+  }
+}
