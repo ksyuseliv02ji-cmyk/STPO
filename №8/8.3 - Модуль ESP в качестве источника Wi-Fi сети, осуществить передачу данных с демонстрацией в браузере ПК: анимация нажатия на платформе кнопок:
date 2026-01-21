@@ -1,0 +1,76 @@
+//Исходный код для ESP32:
+#include <WiFi.h>
+#include <WebServer.h>
+const char* ssid = "ESP32_AP";
+const char* password = "12345678";
+WebServer server(80);
+// HTML страница с кнопкой и анимацией
+const char htmlPage[] PROGMEM = R"rawliteral(
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ESP32 WiFi AP Demo</title>
+  <style>
+    .btn {
+      padding: 15px 30px;
+      font-size: 24px;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+    }
+    .btn:active {
+      background-color: #45a049;
+    }
+    /* Анимация нажатия */
+    .btn:active {
+      animation: pressAnimation 0.3s forwards;
+    }
+    @keyframes pressAnimation {
+      0% { transform: scale(1); }
+      50% { transform: scale(0.9) rotate(-5deg); }
+      100% { transform: scale(1) rotate(0); }
+    }
+  </style>
+</head>
+<body>
+  <h1>ESP32 WiFi AP Demo</h1>
+  <button class="btn" onclick="buttonPressed()">Press</button>
+  <p id="status">NotPressed</p>
+<script>
+function buttonPressed() {
+  fetch('/press')  // Отправляем GET запрос на ESP
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('status').innerText = data;
+    })
+    .catch(err => {
+      document.getElementById('status').innerText = 'Ошибка связи с ESP';
+    });
+}
+</script>
+</body>
+</html>
+)rawliteral";
+void setup() {
+  Serial.begin(115200);
+  delay(1000);
+  Serial.println("Setting up Access Point...");
+  WiFi.softAP(ssid, password);
+  IPAddress IP = WiFi.softAPIP();
+  Serial.print("AP IP address: ");
+  Serial.println(IP);
+  // Роутинг
+  server.on("/", HTTP_GET, []() {
+    server.send_P(200, "text/html", htmlPage);
+  });
+  // Обработчик нажатия на кнопку
+  server.on("/press", HTTP_GET, []() {
+    Serial.println("Button pressed on client!");
+    server.send(200, "text/plain", "Pressed!");
+  });
+  server.begin();
+  Serial.println("HTTP server started");
+}
