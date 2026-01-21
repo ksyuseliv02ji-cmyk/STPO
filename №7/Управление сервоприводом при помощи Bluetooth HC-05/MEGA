@@ -1,0 +1,35 @@
+//Исходный код для MEGA:
+#define LED_PIN 13  // Пин светодиода
+
+
+void setup() {
+    Serial.begin(9600);
+    Serial2.begin(115200);
+    // Настраиваем светодиод
+    pinMode(LED_PIN, OUTPUT);
+    digitalWrite(LED_PIN, LOW);
+   
+    Serial.println("Система запущена");
+    Serial.println("Жду команды 1 или 0 от Serial2...");
+}
+void loop() {
+    if (Serial2.available()) {
+        char command = Serial2.read();  // Считываем команду
+       
+        // Передаем команду в Serial Monitor
+        Serial.write(command);
+       
+        // Управляем светодиодом
+        if (command == '1') {
+            digitalWrite(LED_PIN, HIGH);
+            Serial.println(" - Светодиод ВКЛЮЧЕН");
+        }
+        else if (command == '0') {
+            digitalWrite(LED_PIN, LOW);
+            Serial.println(" - Светодиод ВЫКЛЮЧЕН");
+        }
+        else {
+            Serial.println(" - Неизвестная команда");
+        }
+    }
+}
