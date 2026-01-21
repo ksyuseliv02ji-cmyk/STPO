@@ -1,0 +1,27 @@
+//Исходный код:
+void setup() {
+  Serial.begin(19200);
+  pinMode (22, OUTPUT);
+  pinMode (23, OUTPUT);
+  pinMode (24, OUTPUT);
+  pinMode (25, OUTPUT);
+  pinMode (26, OUTPUT);
+  pinMode (27, OUTPUT);
+}
+void loop() {
+  Serial.println(analogRead(15));
+  light (100, 27);
+  light (250, 26);
+  light (450, 25);
+  light (650, 24);
+  light (950, 23);
+  light (1000, 22);
+}
+ void light (int value, int pin){
+  if (analogRead(15)>=value){
+    digitalWrite (pin, HIGH);
+  }
+  else{
+    digitalWrite (pin, LOW);
+  }
+}
