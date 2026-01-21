@@ -1,0 +1,24 @@
+//Исходный код:
+void setup() {
+    Serial.begin(19200);
+    pinMode(22, OUTPUT);
+    pinMode(23, OUTPUT);
+}
+void loop() {
+    if (Serial.available() > 0) {
+        char command = Serial.read();
+        if (command == '1') {
+            digitalWrite(22, HIGH);
+            digitalWrite(23, LOW);
+            Serial.println("Включен 1 светодиод");
+        } else if (command == '2') {
+            digitalWrite(22, LOW);
+            digitalWrite(23, HIGH);
+            Serial.println("Включен 2 светодиод");
+        } else if (command == '0') {
+            digitalWrite(22, LOW);
+            digitalWrite(23, LOW);
+            Serial.println("Выключены светодиоды");
+        }
+    }
+}
